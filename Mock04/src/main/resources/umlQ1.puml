@@ -1,0 +1,91 @@
+@startuml
+class logic.task.RenderTask {
++ <<Create>> RenderTask(String,double)
++ double compute(ProcessUnit)
++ double parallelCompute(ProcessUnit)
++ void duplicateTask(int)
++ String fullTaskName()
+}
+
+interface interfaces.Computable {
+~ double compute(ProcessUnit)
+}
+
+class logic.task.CalculationTask {
++ <<Create>> CalculationTask(String,double)
++ double compute(ProcessUnit)
++ void changeWorkload(int)
++ void modify(int)
++ String fullTaskName()
+}
+
+class logic.task.TaskList {
+- {static} ArrayList<Task> tasks
++ {static} ArrayList<Task> getTasks()
++ {static} Task getTask(int)
++ {static} void setTasks(ArrayList<Task>)
++ {static} void addTasks(Task)
++ {static} void removeTask(int)
+}
+
+
+class logic.task.TaskManager {
++ {static} ArrayList<Task> getTaskByType(ArrayList<Class>)
++ {static} void deleteDuplicateTasks()
++ {static} boolean instanceOf(Class,Class)
+}
+
+interface interfaces.Modifiable {
+~ void modify(int)
+}
+
+class logic.task.SortTask {
++ <<Create>> SortTask(String,double)
++ double compute(ProcessUnit)
++ double parallelCompute(ProcessUnit)
++ void mergeTask(int)
++ void modify(int)
++ String fullTaskName()
+}
+
+abstract class logic.task.Task {
+- String name
+- double workload
++ <<Create>> Task(String,double)
++ {abstract}String fullTaskName()
++ String toString()
++ String getName()
++ void setName(String)
++ double getWorkload()
++ void setWorkload(double)
+}
+
+
+interface interfaces.Duplicatable {
+~ void duplicateTask(int)
+}
+
+interface interfaces.Parallelizable {
+~ double parallelCompute(ProcessUnit)
+}
+
+class logic.task.SimpleTask {
++ <<Create>> SimpleTask(String,double)
++ String fullTaskName()
+}
+
+
+
+interfaces.Computable <|.. logic.task.RenderTask
+interfaces.Parallelizable <|.. logic.task.RenderTask
+interfaces.Duplicatable <|.. logic.task.RenderTask
+logic.task.Task <|-- logic.task.RenderTask
+interfaces.Computable <|.. logic.task.CalculationTask
+interfaces.Modifiable <|.. logic.task.CalculationTask
+logic.task.Task <|-- logic.task.CalculationTask
+interfaces.Computable <|.. logic.task.SortTask
+interfaces.Modifiable <|.. logic.task.SortTask
+interfaces.Parallelizable <|.. logic.task.SortTask
+logic.task.Task <|-- logic.task.SortTask
+logic.task.Task <|-- logic.task.SimpleTask
+@enduml
