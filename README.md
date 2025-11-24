@@ -1,2 +1,3 @@
 # TuLProgMethFinalPractice
-Mocks provided by the course.
+Mocks and Labs provided by the course.
+
